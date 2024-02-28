@@ -36,7 +36,7 @@ const AuthHome = () => {
     try {
       const url = variant === "LOGIN" ? "/auth/signin" : "/auth/signup";
       const response = await axios.post(`http://localhost:${PORT}${url}`, data);
-      localStorage.setItem("AUTHENTICATE_token", response.data.token);
+      sessionStorage.setItem("AUTHENTICATE_token", response.data.token);
       toast.success(response.data.message);
       navigate("/home");
     } catch (error) {

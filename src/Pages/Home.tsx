@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NotFound from "../utils/NotFound";
 
 const PORT = import.meta.env.VITE_APP_SERVER_PORT || 5000;
 
@@ -9,8 +8,8 @@ interface User {
   id: string;
   name: string;
   email: string;
-  hashedPassword: string;
   emailVerified: boolean;
+  type: string;
 }
 
 const Home = () => {
@@ -20,7 +19,7 @@ const Home = () => {
 
   const handleLogout = async () => {
     try {
-      localStorage.removeItem("AUTHENTICATE_token");
+      sessionStorage.removeItem("AUTHENTICATE_token");
       await axios.get(`http://localhost:${PORT}/auth/logout`, {
         withCredentials: true,
       });
@@ -34,7 +33,7 @@ const Home = () => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("AUTHENTICATE_token");
+        const token = sessionStorage.getItem("AUTHENTICATE_token");
 
         if (!token) {
           const authResponse = await axios.get(
@@ -45,7 +44,7 @@ const Home = () => {
           const { user: newUser, token: newToken } = authResponse.data;
 
           setUser(newUser);
-          localStorage.setItem("AUTHENTICATE_token", newToken);
+          sessionStorage.setItem("AUTHENTICATE_token", newToken);
 
           return;
         }
@@ -69,29 +68,51 @@ const Home = () => {
     fetchData();
   }, []);
 
+  const verifyEmail = () => {
+    try {
+      const token = sessionStorage.getItem("AUTHENTICATE_token");
+
+      const userResponse = axios.get(
+        `http://localhost:${PORT}/auth/verifyemail`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(userResponse);
+      // setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-    {!isLoading && (
+      {!isLoading && (
+        <div className="flex flex-col items-center justify-center h-screen">
+          <div className="text-3xl font-bold mb-8">Welcome!</div>
+          {user && (
+            <>
+              <div className="text-3xl font-bold mb-8">{user.name}</div>
+              <div className="text-3xl font-bold mb-8">{user.email}</div>
+              <div className="text-lg text-gray-500 mb-8">
+                {user.emailVerified ? (
+                  <div>Verified user</div>
+                ) : (
+                  <button onClick={verifyEmail}>verify your email</button>
+                )}
+              </div>
+            </>
+          )}
 
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="text-3xl font-bold mb-8">Welcome!</div>
-      {user && (
-        <>
-          <div className="text-3xl font-bold mb-8">{user.name}</div>
-          <div className="text-3xl font-bold mb-8">{user.email}</div>
-        </>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleLogout}
+          >
+            Sign out
+          </button>
+        </div>
       )}
-
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={handleLogout}
-      >
-        Sign out
-      </button>
-    </div>
-    )}
     </>
-
   );
 };
 

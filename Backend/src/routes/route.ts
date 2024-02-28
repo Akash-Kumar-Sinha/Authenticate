@@ -10,6 +10,8 @@ import register from "../controller/register";
 import login from "../controller/login";
 import getUser from "../controller/getUser";
 import getSocialUsers from "../controller/getSocialUsers";
+import verifyToken from "../utils/verifyToken";
+import idVerify from "../utils/idVerify";
 
 const router = express.Router();
 
@@ -60,5 +62,9 @@ router.get(
 );
 
 router.get("/user", passport.authenticate("jwt", { session: false }), getUser);
+
+router.get("/verify/:token", verifyToken)
+
+router.get("/verifyemail", passport.authenticate("jwt", { session: false }), idVerify)
 
 export default router;
