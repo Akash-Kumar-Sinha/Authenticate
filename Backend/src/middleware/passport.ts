@@ -7,6 +7,7 @@ import {
 } from "passport-jwt";
 
 import { prisma } from "../db";
+
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 interface JwtPayload {

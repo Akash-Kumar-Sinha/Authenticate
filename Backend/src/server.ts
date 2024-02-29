@@ -1,4 +1,3 @@
-// server.ts
 import express, { Request, Response } from "express";
 import session from "express-session";
 import dotenv from "dotenv";
@@ -15,7 +14,7 @@ const port = 5000;
 import router from "../src/routes/route";
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: process.env.CLIENT_PAGE_URL,
   credentials: true,
 };
 

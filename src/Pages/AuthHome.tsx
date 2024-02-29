@@ -6,9 +6,9 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Input from "../component/Input/Input";
 
-const PORT = import.meta.env.VITE_APP_SERVER_PORT;
-
 type Variant = "LOGIN" | "REGISTER";
+
+const SERVER_URL=import.meta.env.VITE_APP_SERVER_PAGE_URL
 
 const AuthHome = () => {
   const [variant, setVariant] = useState<Variant>("LOGIN");
@@ -34,8 +34,8 @@ const AuthHome = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const url = variant === "LOGIN" ? "/auth/signin" : "/auth/signup";
-      const response = await axios.post(`http://localhost:${PORT}${url}`, data);
+      const url = variant === "LOGIN" ? "auth/signin" : "auth/signup";
+      const response = await axios.post(`${SERVER_URL}/${url}`, data);
       sessionStorage.setItem("AUTHENTICATE_token", response.data.token);
       toast.success(response.data.message);
       navigate("/home");
@@ -49,10 +49,10 @@ const AuthHome = () => {
     console.log(action);
     try {
       if (action === "google") {
-        window.open(`http://localhost:${PORT}/auth/google/callback`, "_self");
+        window.open(`${SERVER_URL}/auth/google/callback`, "_self");
       }
       if (action === "github") {
-        window.open(`http://localhost:${PORT}/auth/github`, "_self");
+        window.open(`${SERVER_URL}/auth/github`, "_self");
       }
     } catch (error) {
       console.error("Error during social action:", error);

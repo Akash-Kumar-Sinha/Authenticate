@@ -31,7 +31,6 @@ passport.use(
           return done(new Error("No email found in GitHub profile."));
         }
 
-        // console.log(profile)
         const existingUser = await prisma.user.findUnique({
           where: {
             email: profile.emails[0].value,

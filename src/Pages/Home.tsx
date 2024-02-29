@@ -2,8 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const PORT = import.meta.env.VITE_APP_SERVER_PORT || 5000;
-
 interface User {
   id: string;
   name: string;
@@ -11,6 +9,8 @@ interface User {
   emailVerified: boolean;
   type: string;
 }
+
+const SERVER_URL=import.meta.env.VITE_APP_SERVER_PAGE_URL
 
 const Home = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Home = () => {
   const handleLogout = async () => {
     try {
       sessionStorage.removeItem("AUTHENTICATE_token");
-      await axios.get(`http://localhost:${PORT}/auth/logout`, {
+      await axios.get(`${SERVER_URL}/auth/logout`, {
         withCredentials: true,
       });
       navigate("/");
@@ -37,7 +37,7 @@ const Home = () => {
 
         if (!token) {
           const authResponse = await axios.get(
-            `http://localhost:${PORT}/auth/success`,
+            `${SERVER_URL}/auth/success`,
             { withCredentials: true }
           );
 
@@ -50,7 +50,7 @@ const Home = () => {
         }
 
         const userResponse = await axios.get(
-          `http://localhost:${PORT}/auth/user`,
+          `${SERVER_URL}/auth/user`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -73,7 +73,7 @@ const Home = () => {
       const token = sessionStorage.getItem("AUTHENTICATE_token");
 
       const userResponse = axios.get(
-        `http://localhost:${PORT}/auth/verifyemail`,
+        `${SERVER_URL}/auth/verifyemail`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

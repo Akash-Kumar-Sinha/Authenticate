@@ -8,7 +8,6 @@ if (!JWT_SECRET_KEY) {
     "JWT_SECRET_KEY is not defined in the environment variables."
   );
 }
-
 interface User {
   id: string;
   name: string;

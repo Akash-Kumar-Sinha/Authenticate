@@ -1,4 +1,3 @@
-// routes/route.ts
 import express, { Request, Response } from "express";
 import passport from "passport";
 
@@ -43,7 +42,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: `http://localhost:5173/home`,
+    successRedirect: `${process.env.CLIENT_PAGE_URL}/home`,
     failureRedirect: "/failed",
   })
 );
@@ -56,7 +55,7 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    successRedirect: `http://localhost:5173/home`,
+    successRedirect: `${process.env.CLIENT_PAGE_URL}home`,
     failureRedirect: "/auth/failed",
   })
 );

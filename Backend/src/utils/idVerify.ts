@@ -26,7 +26,7 @@ const idVerify = async (req: Request, res: Response) => {
       where: { id: user.id },
       data: { emailToken: emailToken },
     });
-    const link = ` http://localhost:5000/auth/verify/${emailToken}`;
+    const link = `${process.env.SERVER_PAGE_URL}/auth/verify/${emailToken}`;
 
     await verifyEmail(user.email, link);
 

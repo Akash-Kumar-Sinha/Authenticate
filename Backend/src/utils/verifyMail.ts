@@ -15,8 +15,9 @@ const verifyEmail = async (email: string, link: string) => {
       to: email,
       subject: "Email Verification",
       text: "Welcome",
-      html: `<div><a href="${link}">Click here to validate</a>
-      <p>${link}</p></div>`,
+      html: `<div style="font-family: Arial, sans-serif; text-align: center;">
+      <a href="${link}" style="text-decoration: none; color: #007bff; font-size: 18px;">Click here to validate</a>
+  </div>`,
     });
   } catch (error) {
     console.log("error:verifyEmail", error);
@@ -24,5 +25,3 @@ const verifyEmail = async (email: string, link: string) => {
 };
 
 export default verifyEmail;
-// googlemailverification
-// rgjq rmwf cycz qeqf
