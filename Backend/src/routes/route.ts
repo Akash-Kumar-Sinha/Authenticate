@@ -23,7 +23,7 @@ router.post("/signin", login);
 router.get("/success", getSocialUsers);
 
 router.get("/logout", (req: Request, res: Response) => {
-  res.clearCookie("connect.sid", { path: "/" }); // Clear session cookie
+  res.clearCookie("connect.sid", { path: "/" });
   res.status(200).send("Logout successful");
 });
 
@@ -55,7 +55,7 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    successRedirect: `${process.env.CLIENT_PAGE_URL}home`,
+    successRedirect: `${process.env.CLIENT_PAGE_URL}/home`,
     failureRedirect: "/auth/failed",
   })
 );

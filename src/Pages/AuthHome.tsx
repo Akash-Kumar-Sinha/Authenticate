@@ -52,7 +52,7 @@ const AuthHome = () => {
         window.open(`${SERVER_URL}/auth/google/callback`, "_self");
       }
       if (action === "github") {
-        window.open(`${SERVER_URL}/auth/github`, "_self");
+        window.open(`${SERVER_URL}/auth/github/callback`, "_self");
       }
     } catch (error) {
       console.error("Error during social action:", error);

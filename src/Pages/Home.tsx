@@ -86,33 +86,38 @@ const Home = () => {
   };
 
   return (
-    <>
-      {!isLoading && (
-        <div className="flex flex-col items-center justify-center h-screen">
-          <div className="text-3xl font-bold mb-8">Welcome!</div>
-          {user && (
-            <>
-              <div className="text-3xl font-bold mb-8">{user.name}</div>
-              <div className="text-3xl font-bold mb-8">{user.email}</div>
-              <div className="text-lg text-gray-500 mb-8">
-                {user.emailVerified ? (
-                  <div>Verified user</div>
-                ) : (
-                  <button onClick={verifyEmail}>verify your email</button>
-                )}
-              </div>
-            </>
-          )}
-
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleLogout}
-          >
-            Sign out
-          </button>
-        </div>
-      )}
-    </>
+    <div className="flex flex-col items-center justify-center h-screen">
+    {isLoading ? (
+      <div>Loading...</div>
+    ) : (
+      <>
+        <div className="text-3xl font-bold mb-8">Welcome!</div>
+        {user && (
+          <>
+            <div className="text-3xl font-bold mb-8">{user.email}</div>
+            <div className="text-lg text-gray-500 mb-8">
+              {user.emailVerified ? (
+                <div>Verified user</div>
+              ) : (
+                <button
+                  onClick={verifyEmail}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Verify Your Email
+                </button>
+              )}
+            </div>
+          </>
+        )}
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Sign out
+        </button>
+      </>
+    )}
+  </div>
   );
 };
 
