@@ -10,7 +10,7 @@ interface User {
   type: string;
 }
 
-const SERVER_URL=import.meta.env.VITE_APP_SERVER_PAGE_URL
+const SERVER_URL = import.meta.env.VITE_APP_SERVER_PAGE_URL;
 
 const Home = () => {
   const navigate = useNavigate();
@@ -36,10 +36,9 @@ const Home = () => {
         const token = sessionStorage.getItem("AUTHENTICATE_token");
 
         if (!token) {
-          const authResponse = await axios.get(
-            `${SERVER_URL}/auth/success`,
-            { withCredentials: true }
-          );
+          const authResponse = await axios.get(`${SERVER_URL}/auth/success`, {
+            withCredentials: true,
+          });
 
           const { user: newUser, token: newToken } = authResponse.data;
 
@@ -49,12 +48,9 @@ const Home = () => {
           return;
         }
 
-        const userResponse = await axios.get(
-          `${SERVER_URL}/auth/user`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const userResponse = await axios.get(`${SERVER_URL}/auth/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         const { user } = userResponse.data;
         setUser(user);
@@ -72,12 +68,9 @@ const Home = () => {
     try {
       const token = sessionStorage.getItem("AUTHENTICATE_token");
 
-      const userResponse = axios.get(
-        `${SERVER_URL}/auth/verifyemail`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const userResponse = axios.get(`${SERVER_URL}/auth/verifyemail`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       console.log(userResponse);
       // setUser(user);
     } catch (error) {
@@ -87,37 +80,37 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-    {isLoading ? (
-      <div>Loading...</div>
-    ) : (
-      <>
-        <div className="text-3xl font-bold mb-8">Welcome!</div>
-        {user && (
-          <>
-            <div className="text-3xl font-bold mb-8">{user.email}</div>
-            <div className="text-lg text-gray-500 mb-8">
-              {user.emailVerified ? (
-                <div>Verified user</div>
-              ) : (
-                <button
-                  onClick={verifyEmail}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Verify Your Email
-                </button>
-              )}
-            </div>
-          </>
-        )}
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Sign out
-        </button>
-      </>
-    )}
-  </div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <div className="text-3xl font-bold mb-8">Welcome!</div>
+          {user && (
+            <>
+              <div className="text-3xl font-bold mb-8">{user.email}</div>
+              <div className="text-lg mb-8">
+                {user.emailVerified ? (
+                  <div className="text-green-600 font-bold">Verified user</div>
+                ) : (
+                  <button
+                    onClick={verifyEmail}
+                    className="bg-transparent text-red-500 font-bold py-2 px-4 rounded"
+                  >
+                    Verify Your Email
+                  </button>
+                )}
+              </div>
+            </>
+          )}
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Sign out
+          </button>
+        </>
+      )}
+    </div>
   );
 };
 

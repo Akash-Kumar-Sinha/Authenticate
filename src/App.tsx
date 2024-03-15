@@ -6,15 +6,14 @@ import HotToast from "./utils/HotToast";
 import NotFound from "./utils/NotFound";
 
 const App = () => {
-
   return (
     <>
-    <HotToast/>
-    <Routes>
-      <Route path="/" element={<AuthHome/>}/>
-      <Route path="/home" element={<Home/>}/>
-      <Route path="*" element={<NotFound/>}/>
-    </Routes>
+      <HotToast />
+      <Routes>
+        <Route path="/" element={<AuthHome />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   );
 };
