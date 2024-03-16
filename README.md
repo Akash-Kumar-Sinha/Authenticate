@@ -34,7 +34,7 @@ Contributions to this repository are welcome! Here are a few ways you can contri
 
 ## Credits
 
-This project was created and maintained by [Akash Kumar Sinha](https://github.com/Akash-Kumar-Sinha). Special thanks to contributors and open-source libraries used in this project.
+This project was created and maintained by [Akash Kumar Sinha](https://github.com/Akash-Kumar-Sinha).
 
 #### Note
 
